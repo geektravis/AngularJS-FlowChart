@@ -30,16 +30,19 @@
     ng-mousedown="nodeMouseDown($event, node)"
     ng-attr-transform="translate({{node.x()}}, {{node.y()}})"
     >
-    <rect 
+<g xmlns="http://www.w3.org/2000/svg">
       ng-attr-class="{{node.selected() && 'selected-node-rect' || (node == mouseOverNode && 'mouseover-node-rect' || 'node-rect')}}"
-      ry="10" 
-      rx="10" 
-      x="0" 
-      y="0" 
-      ng-attr-width="{{node.width()}}" 
-      ng-attr-height="{{node.height()}}" 
-      fill="url(#nodeBackgroundGradient)"
-      >
+    <rect x="12" y="2" width={{node.width()-node.height()/2}} height={{node.height()-4}} fill="#0c0"/>
+		<line fill="none"  stroke-width="4" stroke="#010101" x1="10" y1="0" x2={{node.width()-node.height()/2}} y2="0"/>
+		<line fill="none"  stroke-width="4" stroke="#010101" x1="10" y1={{node.height()}} x2={{node.width()-node.height()/2}} y2={{node.height()}}/>
+		<line fill="none"  stroke-width="4" stroke="#010101" x1="10" y1=0 x2=10 y2={{node.height()}}/>
+		  
+      <clipPath id="cut-off-bottom">
+          <rect x={{node.width()-node.height()/2}} y="0" width={{node.height()/2}} height={{node.height()}} />
+      </clipPath>
+
+      <circle stroke="#000" stroke-width="4" fill="#0c0" cx={{node.width()-node.height()/2}} cy={{node.height()/2}} r={{node.height()/2}} clip-path="url(#cut-off-bottom)" />
+	</g>
 
     </rect>
 
